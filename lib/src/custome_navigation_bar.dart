@@ -51,6 +51,8 @@ class CustomNavigationBar extends StatefulWidget {
     this.isFloating = false,
     this.blurEffect = false,
     this.opacity = 0.8,
+    this.rowAlignment = MainAxisAlignment.start,
+    this.rowPadding = 0
   })  : assert(scaleFactor <= 0.5, 'Scale factor must smaller than 0.5'),
         assert(scaleFactor > 0, 'Scale factor must bigger than 0'),
         assert(0 <= currentIndex && currentIndex < items.length),
@@ -158,6 +160,16 @@ class CustomNavigationBar extends StatefulWidget {
 
   final CustomNavigationBarThemeData? lightThemeData;
   final CustomNavigationBarThemeData? darkThemeData;
+
+  ///
+  /// Setting spacing between item
+  ///
+  final MainAxisAlignment? rowAlignment;
+
+  ///
+  /// Setting padding row horizontal
+  ///
+  final double? rowPadding;
 
   @override
   _CustomNavigationBarState createState() => _CustomNavigationBarState();
@@ -357,23 +369,50 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
         width: MediaQuery.of(context).size.width,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: widget.rowAlignment!,
           children: <Widget>[
             for (var i = 0; i < widget.items.length; i++)
-              Expanded(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    widget.onTap!(i);
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildIcon(i),
-                      _buildLabel(i),
-                    ],
-                  ),
-                ),
-              ),
+              widget.rowAlignment == MainAxisAlignment.center
+                  ? Flexible(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          widget.onTap!(i);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: widget.rowPadding ?? 0,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _buildIcon(i),
+                              _buildLabel(i),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  : Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          widget.onTap!(i);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: widget.rowPadding ?? 0,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _buildIcon(i),
+                              _buildLabel(i),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
           ],
         ),
       ),
