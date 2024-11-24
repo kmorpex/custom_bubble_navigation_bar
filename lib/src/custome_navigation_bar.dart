@@ -52,7 +52,8 @@ class CustomNavigationBar extends StatefulWidget {
     this.blurEffect = false,
     this.opacity = 0.8,
     this.rowAlignment = MainAxisAlignment.start,
-    this.rowPadding = 0
+    this.rowPadding = 0,
+    this.titlePadding = 0
   })  : assert(scaleFactor <= 0.5, 'Scale factor must smaller than 0.5'),
         assert(scaleFactor > 0, 'Scale factor must bigger than 0'),
         assert(0 <= currentIndex && currentIndex < items.length),
@@ -171,6 +172,11 @@ class CustomNavigationBar extends StatefulWidget {
   ///
   final double? rowPadding;
 
+  ///
+  /// Setting padding between title and icon
+  ///
+  final double? titlePadding;
+
   @override
   _CustomNavigationBarState createState() => _CustomNavigationBarState();
 }
@@ -269,14 +275,20 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
       if (widget.items[index].title == null && widget.isFloating) {
         return Container();
       } else {
-        return widget.items[index].title ?? Container();
+        return widget.items[index].title ? Padding(
+          padding: EdgeInsets.only(top: widget.titlePadding),
+          child: widget.items[index].title,
+        ) : Container();
       }
     } else {
       //selected
       if (widget.isFloating && widget.items[index].title == null) {
         return Container();
       } else {
-        return widget.items[index].selectedTitle ?? Container();
+        return widget.items[index].selectedTitle ? Padding(
+          padding: EdgeInsets.only(top: widget.titlePadding),
+          child: widget.items[index].selectedTitle,
+        ) : Container();
       }
     }
   }
