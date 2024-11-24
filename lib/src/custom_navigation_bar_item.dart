@@ -28,6 +28,7 @@ class CustomNavigationBarItem {
     Text? selectedTitle,
     this.badgeCount = 0,
     this.showBadge = false,
+    this.rowPadding = 0
   })  : selectedIcon = selectedIcon ?? icon,
         selectedTitle = selectedTitle ?? title;
 
@@ -60,4 +61,9 @@ class CustomNavigationBarItem {
 
   /// hide or show badge
   final bool showBadge;
+
+  ///
+  /// Setting padding between icon and text
+  ///
+  final double? rowPadding;
 }
