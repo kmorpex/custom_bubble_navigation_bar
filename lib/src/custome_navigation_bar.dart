@@ -275,7 +275,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
       if (widget.items[index].title == null && widget.isFloating) {
         return Container();
       } else {
-        return widget.items[index].title ? Padding(
+        return widget.items[index].title != null ? Padding(
           padding: EdgeInsets.only(top: widget.titlePadding),
           child: widget.items[index].title,
         ) : Container();
@@ -285,7 +285,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar>
       if (widget.isFloating && widget.items[index].title == null) {
         return Container();
       } else {
-        return widget.items[index].selectedTitle ? Padding(
+        return widget.items[index].selectedTitle != null ? Padding(
           padding: EdgeInsets.only(top: widget.titlePadding),
           child: widget.items[index].selectedTitle,
         ) : Container();
