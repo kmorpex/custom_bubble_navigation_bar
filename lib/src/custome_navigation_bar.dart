@@ -175,7 +175,7 @@ class CustomNavigationBar extends StatefulWidget {
   ///
   /// Setting padding between title and icon
   ///
-  final double? titlePadding;
+  final double titlePadding;
 
   @override
   _CustomNavigationBarState createState() => _CustomNavigationBarState();
